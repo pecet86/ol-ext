@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" itemscope itemtype="http://schema.org/Article">
+	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/activity# article: http://ogp.me/ns/article#">
+		<meta charset="utf-8"/>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css" type="text/css"/>
+		<link rel="stylesheet" href="../src/control/MeasureControl.css" type="text/css"/>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.js"></script>
+		<script src="../src/control/MeasureControl.es6"></script>
+
+		<style>
+.map:-moz-full-screen {
+	height: 100%;
+	width: 100%;
+}
+.map:-webkit-full-screen {
+	height: 100%;
+	width: 100%;
+}
+.map:-ms-fullscreen {
+	height: 100%;
+	width: 100%;
+}
+.map:full-screen {
+	height: 100%;
+	width: 100%;
+}
+
+body,html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: helvetica, sans-serif, arial;
+    font-size: 14px;
+	
+	height: 100%;
+    overflow: hidden;
+}
+
+.fill { 
+    min-height: 100%;
+    height: 100%;
+	
+	margin: 0px;
+    padding: 0px;
+}
+  		
+		</style>
+		<script>
+function init(){
+	const source = new ol.source.Vector({
+		features : new ol.Collection()
+	});
+	const layer = new ol.layer.Vector({
+		source : source
+	});
+						
+	const map = new ol.Map({
+		layers : [
+			new ol.layer.Tile({
+				source: new ol.source.OSM()
+			}),
+			layer,		
+		],
+		target : 'map',
+		view : new ol.View({
+			center: [0, 0],
+			zoom: 2
+		}),
+		controls : ol.control.defaults().extend([
+			new ol.control.MeasureControl({
+				helpMsg : 'Click to start drawing',
+				continuePolygonMsg : 'Click to continue drawing the polygon',
+				continueLineMsg : 'Click to continue drawing the line',
+				tooltip : 'measure'
+			})
+		]),
+	});
+
+
+}
+		
+		</script>	
+	</head>
+	<body onload='init()'>
+		<div id="map" class="map fill"></div>
+	</body>
+</html>
